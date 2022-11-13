@@ -3,10 +3,7 @@ package in.upcode.eshop.controller;
 import in.upcode.eshop.services.ProductService;
 import model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
@@ -18,13 +15,23 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/products")
-    public List<Product>getAllProducts(){
+    public List<Product> getAllProducts() {
         return productService.getAllProducts();
     }
 
     @RequestMapping("/products/{id}")
-    public Product getProduct(@PathVariable int id){
-        return  productService.getProduct(id);
+    public Product getProduct(@PathVariable int id) {
+        return productService.getProduct(id);
 
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/products")
+    public void addProduct(@RequestBody Product product){
+        productService.addProduct(product);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT,value = "/products/{id}")
+    public void updateProduct(@RequestBody Product product,@PathVariable int id){
+        productService.updateProduct(id, product);
     }
 }
