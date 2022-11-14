@@ -1,8 +1,10 @@
-package model;
+package in.upcode.eshop.model;
 
 import lombok.*;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Getter
@@ -10,6 +12,8 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Entity
+
 public class Product {
 
     @Id

@@ -1,12 +1,13 @@
 package in.upcode.eshop.controller;
 
 import in.upcode.eshop.services.ProductService;
-import model.Product;
+import in.upcode.eshop.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ProductController {
@@ -20,7 +21,7 @@ public class ProductController {
     }
 
     @RequestMapping("/products/{id}")
-    public Product getProduct(@PathVariable int id) {
+    public Optional<Product> getProduct(@PathVariable int id) {
         return productService.getProduct(id);
 
     }

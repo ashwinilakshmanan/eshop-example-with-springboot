@@ -1,50 +1,63 @@
 package in.upcode.eshop.services;
 
-import model.Product;
+import in.upcode.eshop.repository.ProductRepository;
+import in.upcode.eshop.model.Product;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
-    private List<Product> products = new ArrayList<>(Arrays.asList(
-            new Product(1, "Shoes", 10),
-            new Product(2, "Books", 100),
-            new Product(3, "Electronics", 200)
-    ));
+
+    @Autowired
+    private ProductRepository productRepository;
+
+//    private List<Product> products = new ArrayList<>(Arrays.asList(
+//            new Product(1, "Shoes", 10),
+//            new Product(2, "Books", 100),
+//            new Product(3, "Electronics", 200)
+//    ));
 
     //get all products
     public List<Product> getAllProducts() {
-        return products;
+
+       return productRepository.findAll();
     }
 
     //get products by id
-    public Product getProduct(int id) {
-        return products.stream().filter(t -> t.getId() == id).findFirst().get();
+    public Optional<Product> getProduct(int id) {
+        return productRepository.findById(id);
     }
 
     //add products
     public void addProduct(Product product){
-        products.add(product);
+        productRepository.save(product);
     }
 
     //update products
-    public void updateProduct(int id, Product product){
-        for(int i=0;i<products.size();i++){
-            Product prod=products.get(i);
-            if(prod.getId()==id){
-                products.set(i,product);
-                return;
-            }
+    public void updateProduct(int id, Product prod){
+        Optional<Product> product;
+        product=productRepository.findById(id);
+        if(product.isEmpty()){
+            System.out.println("item not found");
+            return;
         }
+        Product existingProduct=product.get();
+        if(prod.getName()!=null){
+            existingProduct.setName(prod.getName());
+        }
+        if(prod.getQuantity()!=0){
+            existingProduct.setQuantity(prod.getQuantity());
+        }
+        productRepository.save(existingProduct);
+
     }
 
     //delete products
     public  void deleteProduct(int id){
-        products.removeIf(item->item.getId()==id);
+        productRepository.deleteById(id);
     }
 
 
