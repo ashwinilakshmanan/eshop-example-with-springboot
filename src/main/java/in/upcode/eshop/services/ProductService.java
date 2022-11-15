@@ -23,7 +23,7 @@ public class ProductService {
     //get all products
     public List<Product> getAllProducts() {
 
-       return productRepository.findAll();
+        return productRepository.findAll();
     }
 
     //get products by id
@@ -32,23 +32,23 @@ public class ProductService {
     }
 
     //add products
-    public void addProduct(Product product){
+    public void addProduct(Product product) {
         productRepository.save(product);
     }
 
     //update products
-    public void updateProduct(int id, Product prod){
+    public void updateProduct(int id, Product prod) {
         Optional<Product> product;
-        product=productRepository.findById(id);
-        if(product.isEmpty()){
+        product = productRepository.findById(id);
+        if (product.isEmpty()) {
             System.out.println("item not found");
             return;
         }
-        Product existingProduct=product.get();
-        if(prod.getName()!=null){
+        Product existingProduct = product.get();
+        if (prod.getName() != null) {
             existingProduct.setName(prod.getName());
         }
-        if(prod.getQuantity()!=0){
+        if (prod.getQuantity() != 0) {
             existingProduct.setQuantity(prod.getQuantity());
         }
         productRepository.save(existingProduct);
@@ -56,10 +56,9 @@ public class ProductService {
     }
 
     //delete products
-    public  void deleteProduct(int id){
+    public void deleteProduct(int id) {
         productRepository.deleteById(id);
     }
-
 
 
 }
